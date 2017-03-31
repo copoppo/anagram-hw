@@ -4,3 +4,4 @@
 2. Composition for WordList inside Anagrams
 3. Read through methods
   Lost in WordList
+ 4. Get rid of the first for loop in the Word class
