@@ -7,6 +7,8 @@
  * line. It then reads a dictionary from a file and finds a list of anagrams based on that dictionary
  */
 
+//there really shouldn't be a subclass relationshpi
+//public class anagram extends WordList implements UsefulConstants {
 public class anagram{	
 	private static Word[] Candidate = new Word[100000]; //a collection of possible anagrams
 	private static int totalCandidates=0;
@@ -16,25 +18,41 @@ public class anagram{
 	
 	public static void main(String[] argv) 
 	{
-		if (argv.length < 1 || argv.length > 3) 
+//		if (argv.length < 1 || argv.length > 3) //this doesn't really do anything if the argument is more than 3 so
+		//then again i'm not really sure if we need to comment it out because i'm not sure what the second part of the argument is for
+		if(argv.length < 1)
 		{
-			//System.err.println("Usage: java anagram  string-to-anagram " + "[min-len [word-file]]");
-			//System.err.println("lengt")
+			System.err.println("The argument passed in needs to at least be of length 1");
 			return;
 		}
 		
+		//for the second argument, the user can decide what they want the length of the cadidate words to be
 		if (argv.length >= 2)
 		{
+			System.out.println("here");
 			MinimumLength = Integer.parseInt(argv[1]);
+			System.out.println("minimum length is " + MinimumLength);
 		}
 		
-		// word filename is optional 3rd argument
-		wordDictionary.ReadDict( argv.length==3? argv[2] : "words.txt" );
+		String doc;
+		//so the user can also input a file name as the 3rd argument
+		if(argv.length == 3)
+		{
+			doc = argv[2];
+		}
+		else
+		{
+			doc = "words.txt";
+		}
+		wordDictionary.ReadDict( doc );
 		
 		//okay so doanagram starts the candidates
 		DoAnagrams(argv[0]);
 	}
 	
+	//i'm not sure if it would be better to just do away with this method and make it the main class
+	//especially since all it's doing is calling on the anagrams so why not just make it in the main method
+	//then again it is taking in a string from the arguments so maybe i do need it
 	private static void DoAnagrams(String anag)
 	{
 		Word myAnagram = new Word(anag);
@@ -52,6 +70,7 @@ public class anagram{
 		System.out.println("----" + anag + "----");
 	}
 
+	//also changing the letter of d because i didn't realize what it was for
 	private static void getCandidates(Word entryWord) {
 	//	for (int i = totCandidates = 0; i < totWords; i++)
 		//i just changed the method signature because i felt that it was unnecessary since toCandidates is already declared as 0 in the beginning
@@ -76,6 +95,7 @@ public class anagram{
 		}
 	}
 	
+	//so this method is just to check if the letters of the anagramWord and the dictionary entry are the same
 	private static boolean fewerOfEachLetter(int anagCount[], int entryCount[])
 	{
 		for (int i = 25; i >=0; i--)
@@ -91,6 +111,7 @@ public class anagram{
 		return true;
 	}
 	
+	//this method just prints out all the possible anagrams
 	private static void PrintCandidate()
 	{
 		System.out.println("Candiate words:");
@@ -154,9 +175,12 @@ public class anagram{
 		}
 	}
 
+	//there's a lot of for loops in here and I'm not sure if all of them are necessary
+	//i guess it's just sorting out the possible anagrams alphabetically
 	static void sortCandidates(Word enterWord)
 	{
 		int[] MasterCount=new int[26]; 
+//		int LeastCommonCount;
 		
 		setMasterCount(MasterCount);
 		int LeastCommonCount = 100000 * 5;
@@ -222,6 +246,8 @@ public class anagram{
 		}
 	}
 
+	//this one in general is fine too
+	//i'm not sure why we need the quicksort though
 	private static void quickSort(int left, int right, int LeastCommonIndex)
 	{
 		// standard quicksort from any algorithm book
@@ -257,6 +283,7 @@ public class anagram{
 		quickSort(last+1,right, LeastCommonIndex);
 	}
 	
+	//this one is fine
 	private static void swap(int d1, int d2) 
 	{
 		Word tmp = Candidate[d1];
