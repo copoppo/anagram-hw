@@ -6,7 +6,7 @@
 
 public class anagram extends WordList implements UsefulConstants {
 	static Word[] Candidate = new Word[MAXWORDS];
-	static int totCandidates = 0,
+	static int totCandidates = 0;
 	static int MinimumLength = 3;
 	static WordList wordDictionary = new WordList();
 	
@@ -79,7 +79,7 @@ public class anagram extends WordList implements UsefulConstants {
 	}
 
 	static void FindAnagram(
-		Word d,
+		Word enterWord,
 		String WordArray[],
 		int Level, int StartAt, int EndAt) 
 	{
@@ -89,7 +89,7 @@ public class anagram extends WordList implements UsefulConstants {
 		for (int i = StartAt; i < EndAt; i++) {
 			enoughCommonLetters = true;
 			for (int j = 25; j >= 0 && enoughCommonLetters; j--)
-				if (d.count[j] < Candidate[i].count[j])
+				if (enterWord.count[j] < Candidate[i].count[j])
 					enoughCommonLetters = false;
 			
 			if (enoughCommonLetters) {
@@ -100,7 +100,7 @@ public class anagram extends WordList implements UsefulConstants {
 				wordFound(WordArray, Level, WordToPass, i);
 				if (WordToPass.total == 0) {
 					/* Found a series of words! */
-					for (j = 0; j <= Level; j++)
+					for (int j = 0; j <= Level; j++)
 						o.print(WordArray[j] + " ");
 					o.println();
 				} else if (WordToPass.total < MinimumLength) {
@@ -128,7 +128,7 @@ public class anagram extends WordList implements UsefulConstants {
 		} 
 		else 
 		{
-			FindAnagram(WordToPass, WordArray, Level+1,i, totalCandidates);
+			FindAnagram(WordToPass, WordArray, Level+1,i, totCandidates);
 		}
 	}
 	
@@ -150,7 +150,8 @@ public class anagram extends WordList implements UsefulConstants {
 				
 		quickSort(0, totCandidates-1, LeastCommonIndex );
 		
-		for (int i = 0; i < totCandidates; i++)
+		int i = 0;
+		for (i = 0; i < totCandidates; i++)
 			if (Candidate[i].containsLetter(LeastCommonIndex))
 				break;
 		
