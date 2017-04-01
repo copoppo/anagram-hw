@@ -31,7 +31,7 @@ public class anagram extends WordList implements UsefulConstants {
 		getCandidates(myAnagram);
 		PrintCandidate();
 		
-		int RootIndexEnd = sortCandidates(myAnagram);
+		int RootIndexEnd = findRootIndex(myAnagram);
 		
 		o.println("Anagrams of " + anag + ":");
 		FindAnagram(myAnagram, new String[50],  0, 0, RootIndexEnd);
@@ -131,7 +131,7 @@ public class anagram extends WordList implements UsefulConstants {
 		return total;
 	}
 
-	static int sortCandidates(Word d)
+	static int findRootIndex(Word d)
 	{
 		int LeastCommonIndex = findLeastCommonIndex(d);
 				
