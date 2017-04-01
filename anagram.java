@@ -6,8 +6,9 @@
 
 public class anagram extends WordList implements UsefulConstants {
 	static Word[] Candidate = new Word[MAXWORDS];
-	static int totCandidates=0,
-			   MinimumLength = 3;
+	static int totCandidates = 0,
+	static int MinimumLength = 3;
+	static WordList wordDictionary = new WordList();
 	
 	public static void main(String[] argv) {
 		if (argv.length < 1 || argv.length > 3) {
@@ -18,8 +19,20 @@ public class anagram extends WordList implements UsefulConstants {
 		if (argv.length >= 2)
 			MinimumLength = Integer.parseInt(argv[1]);
 		
-		// word filename is optional 3rd argument
-		ReadDict( argv.length==3? argv[2] : "words.txt" );
+		String doc;
+		//so the user can also input a file name as the 3rd argument
+		
+		if(argv.length == 3)
+		{
+			doc = argv[2];
+		}
+		
+		else
+		{
+			doc = "words.txt";
+		}
+		wordDictionary.ReadDict(doc);
+		
 		DoAnagrams(argv[0]);
 	}
 	
@@ -40,12 +53,12 @@ public class anagram extends WordList implements UsefulConstants {
 	}
 
 	static void getCandidates(Word d) {
-		for (int i = totCandidates = 0; i < totWords; i++)
-			if (   (    Dictionary[i].total >= MinimumLength   )
-				&& (    Dictionary[i].total + MinimumLength <= d.total
-					||  Dictionary[i].total == d.total)
-				&& ( fewerOfEachLetter(d.count, Dictionary[i].count) )  )
-				Candidate[totCandidates++]=Dictionary[i];
+		for (int i = totCandidates = 0; i < wordDictionary.totWords; i++)
+			if (   (    wordDictionary.Dictionary[i].total >= MinimumLength   )
+				&& (    wordDictionary.Dictionary[i].total + MinimumLength <= d.total
+					||  wordDictionary.Dictionary[i].total == d.total)
+				&& ( fewerOfEachLetter(d.count, wordDictionary.Dictionary[i].count) )  )
+				Candidate[totCandidates++]=wordDictionary.Dictionary[i];
 		
 	}
 	
