@@ -70,25 +70,21 @@ public class anagram extends WordList implements UsefulConstants {
 		String WordArray[],
 		int Level, int StartAt, int EndAt) 
 	{
-		int i, j;
 		boolean enoughCommonLetters;
 		Word WordToPass = new Word("");
 		
-		for (i = StartAt; i < EndAt; i++) {
+		for (int i = StartAt; i < EndAt; i++) {
 			enoughCommonLetters = true;
-			for (j = 25; j >= 0 && enoughCommonLetters; j--)
+			for (int j = 25; j >= 0 && enoughCommonLetters; j--)
 				if (d.count[j] < Candidate[i].count[j])
 					enoughCommonLetters = false;
 			
 			if (enoughCommonLetters) {
 				WordArray[Level] = Candidate[i].aword;
-				WordToPass.total = 0;
-				for (j = 25; j >= 0; j--) {
-					WordToPass.count[j] = (byte) (d.count[j] - Candidate[i].count[j] );
-					if ( WordToPass.count[j] != 0 ) {
-						WordToPass.total += WordToPass.count[j];
-					}
-				}
+				
+				WordToPass.total = findMissingLetters(enterWord, WordToPass, i);
+				
+				wordFound(WordArray, Level, WordToPass, i);
 				if (WordToPass.total == 0) {
 					/* Found a series of words! */
 					for (j = 0; j <= Level; j++)
@@ -102,9 +98,53 @@ public class anagram extends WordList implements UsefulConstants {
 			}
 		}
 	}
+	
+	private static void wordFound(String[] WordArray, int Level, Word WordToPass, int i) {
+		if (WordToPass.total == 0) 
+		{
+			/* Found a series of words! */
+			for (int j = 0; j <= Level; j++)
+			{
+				System.out.print(WordArray[j] + " ");
+			}
+			System.out.println();
+		} 
+		else if (WordToPass.total < MinimumLength) 
+		{
+			 ;/* Don't call again */
+		} 
+		else 
+		{
+			FindAnagram(WordToPass, WordArray, Level+1,i, totalCandidates);
+		}
+	}
+	
+	private static int findMissingLetters(Word enterWord, Word WordToPass, int i) {
+		int total = 0;
+		for (int j = 25; j >= 0; j--)
+		{
+			WordToPass.count[j] = (byte) (enterWord.count[j] - Candidate[i].count[j] );
+			if ( WordToPass.count[j] != 0 ) {
+				total += WordToPass.count[j];
+			}
+		}
+		return total;
+	}
 
 	static int sortCandidates(Word d)
 	{
+		int LeastCommonIndex = findLeastCommonIndex(d);
+				
+		quickSort(0, totCandidates-1, LeastCommonIndex );
+		
+		for (int i = 0; i < totCandidates; i++)
+			if (Candidate[i].containsLetter(LeastCommonIndex))
+				break;
+		
+		return i;
+	}
+	
+	private static int findLeastCommonIndex(Word d) {
 		int[] MasterCount=new int[26];
 		int LeastCommonIndex=0, LeastCommonCount;
 		int i, j;
@@ -122,14 +162,7 @@ public class anagram extends WordList implements UsefulConstants {
 				LeastCommonCount = MasterCount[j];
 				LeastCommonIndex = j;
 			}
-		
-		quickSort(0, totCandidates-1, LeastCommonIndex );
-		
-		for (i = 0; i < totCandidates; i++)
-			if (Candidate[i].containsLetter(LeastCommonIndex))
-				break;
-		
-		return i;
+		return LeastCommonIndex;
 	}
 
 	static void quickSort(int left, int right, int LeastCommonIndex)
