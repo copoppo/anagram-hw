@@ -8,7 +8,6 @@ public class anagram{
 	static Word[] Candidate = new Word[100000];
 	static int totCandidates=0;
 	static int MinimumLength = 3;
-	static WordList wordDictionary = new WordList();
 	static Word myAnagram;
 	
 	public static void main(String[] argv) 
@@ -33,7 +32,7 @@ public class anagram{
 		{
 			doc = "words.txt";
 		}
-		wordDictionary.ReadDict( doc );
+		WordList.ReadDict( doc );
 		
 		//okay so doanagram starts the candidates
 		DoAnagrams(argv[0]);
@@ -57,12 +56,12 @@ public class anagram{
 
 	static void getCandidates(Word d) 
 	{
-		for (int i = 0; i < wordDictionary.totWords; i++)
-			if (   (    wordDictionary.Dictionary[i].total >= MinimumLength   )
-				&& (    wordDictionary.Dictionary[i].total + MinimumLength <= d.total
-					||  wordDictionary.Dictionary[i].total == d.total)
-				&& ( fewerOfEachLetter(d.count, wordDictionary.Dictionary[i].count) )  )
-				Candidate[totCandidates++]=wordDictionary.Dictionary[i];
+		for (int i = 0; i < WordList.totWords; i++)
+			if (   (   WordList.Dictionary[i].total >= MinimumLength   )
+				&& (    WordList.Dictionary[i].total + MinimumLength <= d.total
+					||  WordList.Dictionary[i].total == d.total)
+				&& ( fewerOfEachLetter(d.count, WordList.Dictionary[i].count) )  )
+				Candidate[totCandidates++]=WordList.Dictionary[i];
 		
 	}
 	
@@ -273,7 +272,7 @@ public class anagram{
 			doc = "words.txt";
 		}
 		
-		wordDictionary.ReadDict(doc);
+		WordList.ReadDict(doc);
 		DoAnagrams(testString);	
 	}
 }
