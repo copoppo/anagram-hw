@@ -1,24 +1,28 @@
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class WordList implements UsefulConstants {
-	static Word[] Dictionary = new Word[MAXWORDS];
-	static int totWords=0;
 
-	static void ReadDict (String f) {
+public class WordList{
+	protected Word[] Dictionary = new Word[100000];
+	protected int totWords=0;
+	protected int EOF = -1;
+
+	protected void ReadDict (String f) {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream (f);
 		}
 		catch (FileNotFoundException fnfe) {
-			e.println("Cannot open the file of words '" + f + "'");
+			System.err.println("Cannot open the file of words '" + f + "'");
 			throw new RuntimeException();
 		}
-		e.println ("reading dictionary...");
+		System.err.println ("reading dictionary...");
 		
-		char buffer[] = new char[MAXWORDLEN];
+		char buffer[] = new char[30];
 		String s;
 		int r =0;
-		while (r!=EOF) {
+		while (r!= EOF) {
 			int i = 0;
 			try {
 				// read a word in from the word file
@@ -27,7 +31,7 @@ public class WordList implements UsefulConstants {
 					buffer[i++] = (char) r;
 				}
 			} catch (IOException ioe) {
-				e.println("Cannot read the file of words ");
+				System.err.println("Cannot read the file of words ");
 				throw new RuntimeException();
 			}
 			
@@ -36,6 +40,6 @@ public class WordList implements UsefulConstants {
 			totWords++;
 		}
 		
-		e.println("main dictionary has " + totWords + " entries.");
+		System.err.println("main dictionary has " + totWords + " entries.");
 	}
 }
