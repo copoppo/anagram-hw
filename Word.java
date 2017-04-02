@@ -9,7 +9,6 @@ public class Word  {
 		aword = s;
 		total = 0;
 		s = s.toLowerCase();
-		for (int i = 'a'; i <= 'z'; i++) count[i-'a'] = 0;
 
 		for (int i = s.length()-1; i >= 0; i--) {
 			ch = s.charAt(i) - 'a';
