@@ -4,11 +4,11 @@ import java.io.IOException;
 
 
 public class WordList{
-	protected Word[] Dictionary = new Word[100000];
-	protected int totWords=0;
-	protected int EOF = -1;
+	static Word[] Dictionary = new Word[100000];
+	static int totWords=0;
+	static int EOF = -1;
 
-	protected void ReadDict (String f) {
+	static void ReadDict (String f) {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream (f);
