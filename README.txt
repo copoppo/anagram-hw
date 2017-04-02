@@ -15,5 +15,7 @@ This text file documents the changes that we've made
 
 -Got rid of enoughCommonLetters and the algorithm for determining whether enoughCommonLetters is true or false
 
+-Extracted the if statement in getCandidates into a isCandidate method
+
 
 
