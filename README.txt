@@ -46,7 +46,16 @@ replaced enoughCommonLetters with fewerOfEachLetter method
 -Extracted the if statement in getCandidates into a isCandidate method
   The if statement in getCandidates was really complicated and hard to read through so we extracted an isCandidate method
   so that getCandidates can simply call isCandidate to determine whether or not a dictionary entry is a possible candidate
-  rather than using such a complicated if-else statement. 
+  rather than using such a complicated if-else statement.
+
+-Changed the import java.io.* in WordList to be more specific
+  It's generally bad programming practice to import everything when the class only needs to import several packages so we decided 
+  to declare the packages that we were importing at the top of the class. 
+
+-Made myAnagram a class instance variable instead of a local variable
+  Since myAnagram is passed around in a lot of methods in the anagram class, we felt that it might be better to just declare it as 
+  an instance variable for the class so that all of the methods can refer to it instead of needing to pass it as a parameter each
+  time a method needs to access it. 
 
 
 
