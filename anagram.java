@@ -9,6 +9,7 @@ public class anagram{
 	static int totCandidates=0;
 	static int MinimumLength = 3;
 	static WordList wordDictionary = new WordList();
+	static Word myAnagram;
 	
 	public static void main(String[] argv) 
 	{
@@ -178,5 +179,101 @@ public class anagram{
 		Word tmp = Candidate[d1];
 		Candidate[d1] = Candidate[d2];
 		Candidate[d2] = tmp;
+	}
+	
+	/**
+	 * A separate wellFormed method to check if the anagram word matches with myAnagram
+	 * @return false if the anagram created does not match with myAnagram
+	 */
+	static boolean wellFormedAnagram(String[] theAnagram, int anagEnd)
+	{
+		String checkString = ""; 
+		for (int j = 0; j <= anagEnd; j++)
+		{
+			checkString += theAnagram[j];
+		}
+		
+		Word checkAnagram = new Word(checkString);
+		
+		//if the anagram is longer than myAnagram, it's not a true anagram
+		if (checkString.length() != myAnagram.aword.length())
+		{
+			System.out.println("we're here");
+			System.out.println("checkString's length is " + checkString.length());
+			System.out.println("myAnagram length is " + myAnagram.aword.length());
+			return false;
+		}
+		
+		//then check the count
+		for(int i = 0; i < 26; i++)
+		{
+			if(checkAnagram.count[i] != myAnagram.count[i])
+			{
+				System.out.println("checkAnagram error");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Test the program
+	 * Since this is a test method to make sure that the output of our
+	 * modified code matches with the original output, the argument is 
+	 * not needed since we predetermined the output we wanted.
+	 * However, we wanted to make sure that the possibility that our 
+	 * program would still function the same way if we did pass in 
+	 * an argument so we kept the inital code and just put in the predetermined
+	 * argument
+	 */
+	static void testOutput()
+	{
+		String testString = "holyoke";
+		String [] candidateHolyoke = {"elk",  "hey",  "hoe",  "hoke", 
+				"hole",  "holk",  "holy",  "hook", 
+				"hoy",  "key",  "koel",  "kohl", 
+				"kolo",  "lek",  "ley",  "loo", 
+				"look",  "lye",  "oho",  "oke", 
+				"okeh",  "ole",  "oleo",  "ooh", 
+				"yeh",  "yelk",  "yok",  "yoke", 
+				"yolk"};
+		System.out.println("Candidate words for " + testString);
+		for(int i = 0; i < candidateHolyoke.length; i ++)
+		{
+			System.out.print( candidateHolyoke[i] + ", " + ((i%4 ==3) ?"\n":" " ) );
+		}
+		System.out.println("\n");
+		
+		String[] anagramHolyoke = {"hook ley", "hook lye", "koel hoy",
+				"kolo yeh",  "kolo hey", "hole yok", "look yeh", "look hey", 
+				"oke holy", "hoe yolk", "ooh yelk", "oho yelk"};
+		System.out.println("and anagrams for " + testString);
+		for(int i = 0; i < anagramHolyoke.length; i ++)
+		{
+			System.out.println( anagramHolyoke[i] );
+		}
+		System.out.println("\n");
+		
+		String[] arg = {"holyoke", "3", "words.txt"};
+		if (arg.length < 1 || arg.length > 3) 
+			{
+				System.err.println("The length of the argument has to be at least 1 letter and can't contain more than 3 words");
+				return;
+			}
+			
+			if (arg.length >= 2)
+				MinimumLength = Integer.parseInt(arg[1]);
+		String doc;
+		if(arg.length == 3)
+		{
+			doc = arg[2];
+		}
+		else
+		{
+			doc = "words.txt";
+		}
+		
+		wordDictionary.ReadDict(doc);
+		DoAnagrams(testString);	
 	}
 }
