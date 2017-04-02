@@ -13,4 +13,7 @@ This text file documents the changes that we've made
 
 -Moved down declaration of variables such as i and j into the for loops
 
+-Got rid of enoughCommonLetters and the algorithm for determining whether enoughCommonLetters is true or false
+
+
 
