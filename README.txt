@@ -37,7 +37,8 @@ This text file documents the changes that we've made
  A lot of the variables such as i and j were only used in for loops yet the original author declared them outside of the for loops
  they were used in so we got rid of the declarations and declared them in the for loop that they were controlling. 
 
--Got rid of enoughCommonLetters and the algorithm for determining whether enoughCommonLetters is true or false and replaced enoughCommonLetters with fewerOfEachLetter method
+-Got rid of enoughCommonLetters and the algorithm for determining whether enoughCommonLetters is true or false and 
+replaced enoughCommonLetters with fewerOfEachLetter method
   The logic in the for loop to determine whether enoughCommonLetters should be true or false is pretty similar to what the 
   fewerOfEachLetter method was doing so we decided to replace enoughCommonLetters with fewerOfEachLetter. By doing so, we cut down
   on the duplication of code in the class and also made the method FindAnagrams easier to read. 
