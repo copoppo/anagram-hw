@@ -9,3 +9,10 @@
     - ReadDict( argv.length==3? argv[2] : "words.txt" );
 6. Check variable names and methods
 7. Decide if methods are too long and complicated
+
+
+Questions
+1. How to change the if statements
+   - getCandidate
+   - getLeastCommonIndex 
+2. How to change quicksort and MultiFieldCompare
