@@ -100,10 +100,8 @@ Word Class
 1. got rid of the first for loop in constructor 
     We got rid of the first for loop in the constructor of Word because we felt that it was not needed since an array of ints
     already initializes to 0 so we got rid of it to avoid unneccessary code. 
-2. We added the method fewerOfEachLetter to this class
+2. We added the method fewerOfEachLetter, findMissingLetters and isCandidate to this class
     We moved the method over from the Anagram class because this method was only referencing Word properties and so it would be better if we moved it to the Word class because it belongs better. Because of that, we also changed how it was being called so the method is now non-static and called on Word objects.
-3. We moved isCandidate to the Word class
-    We did this for the same reasoning and we also had to add parameters such as the base word and the minimum length in order for it to work properly. 
     
 2. Method/Variable name changes
 
