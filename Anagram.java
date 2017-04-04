@@ -119,7 +119,7 @@ public class Anagram {
 
 		System.out.println("Anagrams of " + str + ":");
 
-		findAnagrams(base, new String[50], 0, 0, getRootIndexEnd());
+		findAnagrams(base, new String[50], 0, 0, getFirstCandidateIndexWithLeastCommonLetter());
 
 		System.out.println("----" + str + "----");
 	}
@@ -132,33 +132,10 @@ public class Anagram {
 
 		for (int i = 0; i < list.totalWords; i++) {
 			// numLetter should be larger or equal to the minimumLength (3)
-			if (isCandidate(list.dictionary[i])) {
+			if (list.dictionary[i].isCandidate(base, minimumLength)) {
 				candidates[totalCandidates++] = list.dictionary[i];
 			}
 		}
-	}
-
-	/**
-	 * Check whether the potential candidate fulfills the properties of a
-	 * candidate
-	 * 
-	 * @param potentialCandi
-	 *            is potential candidate word
-	 * @param base
-	 *            is the base word
-	 * @return true if potential candidate is a candidate
-	 */
-	private static boolean isCandidate(Word potentialCandi) {
-		if (potentialCandi.total < minimumLength) {
-			return false;
-		}
-		if ((potentialCandi.total + minimumLength > base.total) && (potentialCandi.total != base.total)) {
-			return false;
-		}
-		if (!fewerOfEachLetter(base, potentialCandi)) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -167,9 +144,9 @@ public class Anagram {
 	 * @return the index in the candidates array of the first word that contains
 	 *         the least common letter
 	 */
-	private static int getRootIndexEnd() {
+	private static int getFirstCandidateIndexWithLeastCommonLetter() {
 
-		int rootIndexEnd;
+		int firstCandidateIndexWithLeastCommonLetter;
 		int leastCommonIndex = getLeastCommonIndex();
 
 		quickSort(0, totalCandidates - 1, leastCommonIndex);
@@ -178,14 +155,14 @@ public class Anagram {
 		// from the back of the alphabet
 		// for example, the first candidate that has "y" if the base word is
 		// "holyoke"
-		for (rootIndexEnd = 0; rootIndexEnd < totalCandidates; rootIndexEnd++) {
-			if (candidates[rootIndexEnd].hasLetter(leastCommonIndex)) {
+		for (firstCandidateIndexWithLeastCommonLetter = 0; firstCandidateIndexWithLeastCommonLetter < totalCandidates; firstCandidateIndexWithLeastCommonLetter++) {
+			if (candidates[firstCandidateIndexWithLeastCommonLetter].hasLetter(leastCommonIndex)) {
 				break;
 			}
 		}
 
-		assert wellFormedRootIndexEnd(leastCommonIndex, rootIndexEnd);
-		return rootIndexEnd;
+		assert wellFormedFirstCandidateIndex(leastCommonIndex, firstCandidateIndexWithLeastCommonLetter);
+		return firstCandidateIndexWithLeastCommonLetter;
 	}
 
 	/**
@@ -213,6 +190,7 @@ public class Anagram {
 			if (totalCounts[j] != 0
 					// the counts of this letter is less than the counts of the
 					// current least letter
+					// and if the base word has this letter
 					&& totalCounts[j] < leastCommonCount && base.hasLetter(j)) {
 				// update leastLetter
 				leastCommonCount = totalCounts[j];
@@ -220,7 +198,7 @@ public class Anagram {
 			}
 		}
 
-		assert wellFormedLeastCommonIndex(leastCommonIndex);
+		assert wellFormedLeastCommonIndex(leastCommonIndex, totalCounts);
 
 		return leastCommonIndex;
 	}
@@ -236,7 +214,7 @@ public class Anagram {
 	 * @param leastCommonIndex
 	 *            is the index in the count array of a word
 	 */
-	private static void quickSort(int left, int right, int leastLetterIndex) {
+	private static void quickSort(int left, int right, int leastCommonIndex) {
 		if (left >= right) {
 			return;
 		}
@@ -244,14 +222,14 @@ public class Anagram {
 		int last = left;
 
 		for (int i = left + 1; i <= right; i++) {
-			if (candidates[i].multiFieldCompare(candidates[left], leastLetterIndex) == -1) {
+			if (candidates[i].compare(candidates[left], leastCommonIndex) == -1) {
 				swap(++last, i);
 			}
 		}
 
 		swap(last, left);
-		quickSort(left, last - 1, leastLetterIndex);
-		quickSort(last + 1, right, leastLetterIndex);
+		quickSort(left, last - 1, leastCommonIndex);
+		quickSort(last + 1, right, leastCommonIndex);
 	}
 
 	/**
@@ -272,30 +250,11 @@ public class Anagram {
 	 */
 	private static void findAnagrams(Word comparedWord, String anagrams[], int levelIndex, int start, int end) {
 		for (int i = start; i < end; i++) {
-			if (fewerOfEachLetter(comparedWord, candidates[i])) {
+			if (comparedWord.fewerOfEachLetter(candidates[i])) {
 				anagrams[levelIndex] = candidates[i].myWord;
 				Word wordToPass = new Word("");
-				findMissingLetters(comparedWord, i, wordToPass);
+				comparedWord.findMissingLetters(i, wordToPass, candidates);
 				determineAnagram(anagrams, levelIndex, i, wordToPass);
-			}
-		}
-	}
-
-	/**
-	 * Finds the missing letters that are needed to make up a full anagram
-	 * 
-	 * @param comparedWord
-	 *            is the word to be compared with the other candidates
-	 * @param i
-	 *            is where we are in the candidate array
-	 * @param wordToPass
-	 *            is the word holding the missing letters
-	 */
-	private static void findMissingLetters(Word comparedWord, int i, Word wordToPass) {
-		for (int j = 25; j >= 0; j--) {
-			wordToPass.count[j] = (byte) (comparedWord.count[j] - candidates[i].count[j]);
-			if (wordToPass.count[j] != 0) {
-				wordToPass.total += wordToPass.count[j];
 			}
 		}
 	}
@@ -327,27 +286,6 @@ public class Anagram {
 		} else {
 			findAnagrams(wordToPass, anagrams, levelIndex + 1, i, totalCandidates);
 		}
-	}
-
-	/**
-	 * Compares two words to see if the first one has fewer letters than the
-	 * second one
-	 * 
-	 * @param wordOne
-	 *            is the first word that is passed in
-	 * @param wordTwo
-	 *            is the second word that is passed in
-	 * 
-	 * @return true if wordOne has more or the same amount of letters than
-	 *         wordTwo
-	 */
-	private static boolean fewerOfEachLetter(Word wordOne, Word wordTwo) {
-		for (int i = 25; i >= 0; i--) {
-			if (wordOne.count[i] < wordTwo.count[i]) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	/**
@@ -442,7 +380,7 @@ public class Anagram {
 	 * @param rootIndexEnd
 	 * @return true if rootIndexEnd is well formed
 	 */
-	private static boolean wellFormedRootIndexEnd(int leastCommonIndex, int rootIndexEnd) {
+	private static boolean wellFormedFirstCandidateIndex(int leastCommonIndex, int rootIndexEnd) {
 
 		// index should never be negative or greater or equal to the
 		// totalCandidates
@@ -476,7 +414,7 @@ public class Anagram {
 	 * @param leastCommonIndex
 	 * @return true if leastCommonIndex is well formed
 	 */
-	private static boolean wellFormedLeastCommonIndex(int leastCommonIndex) {
+	private static boolean wellFormedLeastCommonIndex(int leastCommonIndex, int[] totalCounts) {
 
 		// index should never be negative or greater than 25
 		if (leastCommonIndex < 0 || leastCommonIndex > 25) {
@@ -485,14 +423,14 @@ public class Anagram {
 
 		// the count of letters at the leastCommonIndex should always be the
 		// smallest count larger than 0
-		for (int i = 0; i < totalCandidates; i++) {
-			for (int j = 0; j < 26; j++) {
-				if (candidates[i].count[j] > 0) {
-					if (candidates[i].count[j] < candidates[i].count[leastCommonIndex]) {
-						return false;
-					}
+		for (int i = 0; i < totalCounts.length; i++) {
+
+			if (totalCounts[i] > 0) {
+				if (totalCounts[i] < totalCounts[leastCommonIndex]) {
+					return false;
 				}
 			}
+
 		}
 
 		return true;
