@@ -16,9 +16,9 @@ Questions
    - getLeastCommonIndex 
 2. How to change quicksort, MultiFieldCompare, getEndIndex and rootIndexEnd
    - naming
-3. main method test output, do we need to assert equal or sort?
+3. Main method test output, do we need to assert equal or sort?
 
-4. wellformed and assert
+4. Wellformed and assert
 
 5. moving methods around classes
     - anagram is too long
