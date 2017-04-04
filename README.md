@@ -20,5 +20,5 @@ Questions
 
 4. Wellformed and assert
 
-5. moving methods around classes
-    - anagram is too long
+5. Moving methods around classes
+   - anagram is too long
