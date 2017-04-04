@@ -103,16 +103,20 @@ Word Class
 2. We added the method fewerOfEachLetter, findMissingLetters and isCandidate to this class
     We moved the method over from the Anagram class because this method was only referencing Word properties and so it would be better if we moved it to the Word class because it belongs better. Because of that, we also changed how it was being called so the method is now non-static and called on Word objects.
     
-2. Method/Variable name changes
+3. Method/Variable name changes
 
    (Anagram)
   -Changed doAnagrams to getResults
   -Changed Candidate to candidates
   -Changed anagram to base
+  -Changed rootIndexEnd to firstCandidateIndexWithLeastCommonLetter (after office hour advising)
   
   (WordList and Anagram)
   -o; e to System.out; System.err
   
+  (Word)
+  -Changed MultiFieldCompare to compare
+
   (WordList)
   -r to letterValue 
     We changed it because letterValue is more explanatory.
