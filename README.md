@@ -16,3 +16,6 @@ Questions
    - getCandidate
    - getLeastCommonIndex 
 2. How to change quicksort and MultiFieldCompare
+
+
+3. What to do with the naming of getEndIndex and rootIndexEnd
