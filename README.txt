@@ -44,21 +44,18 @@ Anagram
     We changed this because we found that to be too confusing to read through and we wanted it to look more readable to a user
     and so we modified it to if-else statements so it was more obvious that they were checking if a document was being passed
     in. 
-
+    
 4. We changed the parameters of fewerOfEachLetter (from count to Word)
-    We changed the parameters of fewerOfEachLetter because we felt that it looked more elegant that way and that it seemed
+    We changed the parameters of fewerOfEachLetter and moved the method to the Word class because we felt that it looked more elegant that way and that it seemed
     to be better when thinking through the method and what information that it was accessing. The name of the method is more
     suitable with comparing two words because the method is checking if each letter of the first word is less than the second
     word. 
  
-5. Renamed the sortCandidates method to the getRootIndex method and also extracted a findLeastCommonIndex method from it
+5. Renamed the sortCandidates method to the getFirstCandidateIndexWithLeastCommonLetter method and also extracted a findLeastCommonIndex method from it
   The sortCandidates method was misleading because it was not really sorting the candidates but was calculating the
   RootIndexEnd based on the LeastCommonIndex and the sorting from quickSort. Moreover, it was returning an integer which
   doesn't make sense for its naming because why would a sorting algorithm want to return a value when all it's supposed to be
-  doing is reorganizing the Candidate array. Thus we changed the name of sortCandidates to getRootIndex. Along with that, the
-  method also had a for loop to get the LeastCommonIndex which is a different set of logic and so we extracted a
-  findLeastCommonIndex helper method which helped make more sense of the process of the getRootIndex method and also kept
-  getRootIndex from doing too much work. 
+  doing is reorganizing the Candidate array. Thus we changed the name of sortCandidates to getFirstCandidateIndexWithLeastCommonLetter. Along with that, the method also had a for loop to get the LeastCommonIndex which is a different set of logic and so we extracted a findLeastCommonIndex helper method which helped make more sense of the process of the getRootIndex method and also kept getFirstCommonLetterWithLeastCommonLetter from doing too much work. 
 
 6. Broke up the findAnagrams method into a smaller findAnagrams method, a findMissingLetters method, and a determineAnagram
 method
@@ -87,7 +84,7 @@ replaced enoughCommonLetters with fewerOfEachLetter method
 9. Extracted the if statement in getCandidates into a isCandidate method
   The if statement in getCandidates was really complicated and hard to read through. Thus we extracted an isCandidate
   method so that getCandidates can simply call isCandidate to determine whether or not a dictionary entry is a possible
-  candidate rather than using such a complicated if-else statement.
+  candidate rather than using such a complicated if-else statement. We also moved the isCandidate method to the Word class.
 
 10. Changed the import java.io.* in WordList to be more specific
   It's generally bad programming practice to import everything when the class only needs to import several packages so we
@@ -103,6 +100,10 @@ Word Class
 1. got rid of the first for loop in constructor 
     We got rid of the first for loop in the constructor of Word because we felt that it was not needed since an array of ints
     already initializes to 0 so we got rid of it to avoid unneccessary code. 
+2. We added the method fewerOfEachLetter to this class
+    We moved the method over from the Anagram class because this method was only referencing Word properties and so it would be better if we moved it to the Word class because it belongs better. Because of that, we also changed how it was being called so the method is now non-static and called on Word objects.
+3. We moved isCandidate to the Word class
+    We did this for the same reasoning and we also had to add parameters such as the base word and the minimum length in order for it to work properly. 
     
 2. Method/Variable name changes
 
@@ -136,7 +137,9 @@ Testing
     correct and valid to how the original program was using it. There is also another method that checks the leastCommonIndex
     and makes sure that it also consistent with how the original program was using it. Finally, there is a wellFormed method
     to check that the anagram that we've made is actually an anagram of the word we want to find an anagram of.
-  
+    
+3. One wellFormed method for Word
+    We did this because we wanted to check that the word is being formed correctly and that the letters and counts match up        with the string being given. 
 
 
 
