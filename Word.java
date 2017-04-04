@@ -67,14 +67,17 @@ public class Word {
 	 */
 	protected int multiFieldCompare(Word word, int index) {
 
-		if ((hasLetter(index)) && !(word.hasLetter(index)))
+		if ((hasLetter(index)) && !(word.hasLetter(index))) {
 			return 1;
+		}
 
-		if (!(hasLetter(index)) && (word.hasLetter(index)))
+		if (!(hasLetter(index)) && (word.hasLetter(index))) {
 			return -1;
+		}
 
-		if (word.total != total)
+		if (word.total != total) {
 			return (word.total - total);
+		}
 
 		return (myWord).compareTo(word.myWord);
 	}

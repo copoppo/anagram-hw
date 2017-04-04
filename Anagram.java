@@ -28,7 +28,7 @@ public class Anagram {
 	/** The base word that this program finds anagrams for **/
 	private static Word base;
 
-	/** The WordList that holds all the Words in the dictionay **/
+	/** The WordList that holds all the Words in the dictionary **/
 	private static WordList list = new WordList();
 
 	/**
@@ -74,8 +74,13 @@ public class Anagram {
 			return;
 		}
 
-		if (arg.length >= 2)
-			minimumLength = Integer.parseInt(arg[1]);
+		if (arg.length >= 2) {
+			try {
+				minimumLength = Integer.parseInt(arg[1]);
+			} catch (NumberFormatException e) {
+				System.err.println("Please pass in a number as the second argument");
+			}
+		}
 
 		String doc;
 
@@ -85,7 +90,7 @@ public class Anagram {
 			doc = "words.txt";
 		}
 
-		list.ReadDict(doc);
+		list.readDict(doc);
 		findResult(arg[0]);
 	}
 

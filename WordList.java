@@ -25,7 +25,7 @@ public class WordList {
 	 * @param name
 	 *            of the txt file
 	 */
-	protected static void ReadDict(String f) {
+	protected static void readDict(String f) {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(f);
@@ -50,8 +50,9 @@ public class WordList {
 				// read a word in from the word file
 				while ((letterValue = fis.read()) != -1) {
 
-					if (letterValue == '\n')
+					if (letterValue == '\n') {
 						break;
+					}
 
 					currentWord[i++] = (char) letterValue;
 
