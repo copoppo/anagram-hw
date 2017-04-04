@@ -2,44 +2,76 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * This class holds a list of words or candidate anagrams.
+ * 
+ * 
+ * @author
+ *
+ */
+public class WordList {
+	/** the maximum number of words that can be stored in our dictionary **/
+	private static final int MAXWORDS = 100000;
+	/** the maximum length of a word **/
+	private static final int MAXWORDLEN = 30;
+	/** Word array that serves as our dictionary **/
+	protected static Word[] dictionary = new Word[MAXWORDS];
+	/** total number of words in the dictionary **/
+	protected static int totalWords = 0;
 
-public class WordList{
-	static Word[] Dictionary = new Word[100000];
-	static int totWords=0;
-	static int EOF = -1;
-
-	static void ReadDict (String f) {
+	/**
+	 * Reads words from a txt file and parse them into a word array
+	 * 
+	 * @param name
+	 *            of the txt file
+	 */
+	protected static void ReadDict(String f) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream (f);
-		}
-		catch (FileNotFoundException fnfe) {
+			fis = new FileInputStream(f);
+		} catch (FileNotFoundException fnfe) {
 			System.err.println("Cannot open the file of words '" + f + "'");
 			throw new RuntimeException();
 		}
-		System.err.println ("reading dictionary...");
-		
-		char buffer[] = new char[30];
+		System.err.println("reading dictionary...");
+
+		char currentWord[] = new char[MAXWORDLEN];
+
 		String s;
-		int r =0;
-		while (r!= EOF) {
+
+		int letterValue = 0;
+
+		// while we have not reached the end of the file
+		while (letterValue != -1) {
+
 			int i = 0;
+
 			try {
 				// read a word in from the word file
-				while ( (r=fis.read()) != EOF ) {
-					if ( r == '\n' ) break;
-					buffer[i++] = (char) r;
+				while ((letterValue = fis.read()) != -1) {
+
+					if (letterValue == '\n')
+						break;
+
+					currentWord[i++] = (char) letterValue;
+
 				}
+
 			} catch (IOException ioe) {
+
 				System.err.println("Cannot read the file of words ");
 				throw new RuntimeException();
+
 			}
-			
-			s = new String(buffer,0,i);
-			Dictionary[totWords] = new Word(s);
-			totWords++;
+
+			s = new String(currentWord, 0, i);
+
+			dictionary[totalWords] = new Word(s);
+
+			totalWords++;
 		}
-		
-		System.err.println("main dictionary has " + totWords + " entries.");
+
+		System.err.println("main dictionary has " + totalWords + " entries.");
 	}
+
 }
