@@ -1,7 +1,50 @@
 This text file documents the changes that we've made
 
+All the Classes
+- We changed the instance variables of the classes to either private or protected
+    We changed them because the classes shouldn't have access to every other variable in the other classes since that is generally
+    bad programming practice and because we wanted to make sure that all of the classes have exactly the variables that they needed
+    and the law of Demeter is being upheld.
+ - We changed the methods of the classes to either private or protected
+    -We changed the methods in Anagram to private
+      We changed those methods to private because they were only used and needed in that class and so we felt that it would be 
+      better to just declare them as private.
+    We changed the methods in Word and WordList to protected
+      We changed those methods to protected because they were particular to the classes but they also needed to be accessed 
+      by the anagram class so we made them protected. 
+
+
+Aanagram
+- Declared a WordList variale in Anagram
+    We wanted to make the coding more object-oriented so we decided to declare it as a class variable for the Anagram class
+    to use and access the methods for. The other reason for doing that was because we got rid of the inheritance relationship
+    between Anagram and WordList so we did composition and it is generally better to declare an instance of the class that
+    we're compositing with rather than just reference the class.
+
+- Get rid of the main method to do test out put
+    We replaced the main method with a testOutput method to ensure that our program would run the same as the original program.
+    While it is replacing the main method, the anagram class should still be operating in the same way and should be able to 
+    take in arguments from the command line hence we created an argument with a String[] to demonstrate that fact.
+
+- We change the if statement with "?" in the main method to make it more readable
+    We changed this because we found that to be too confusing to read through and we wanted it to look more readable to a user
+    and so we modified it to if-else statements so it was more obvious that they were checking if a document was being passed
+    in. 
+
+- Change the parameters of the fewerOfEachLetter (from count to Word)
+    We changed the parameters of fewerOfEachLetter because we felt that it looked more elegant that way and that it seemed
+    to be better when thinking through the method and what information that they were accessing. 
+
+- Four wellFormed methods
+    There are four wellFormed methods in order to check that the class invariants of the original anagram class were being 
+    upheld in the anagram class that we were improving. One of them checks the Word and candidates array and the candidates 
+    themselves to make sure that they were accurate and usable. Another of these methods is to check if the rootIndexEnd is 
+    correct and valid to how the original program was using it. There is also another method that checks the leastCommonIndex
+    and makes sure that it also consistent with how the original program was using it. Finally, there is a wellFormed method
+    to check that the anagram that we've made is actually an anagram of the word we want to find an anagram of.
+
 -Got rid of the inheritance relationship between the anagram class and the WordList class
-  We decided to get rid of the inheritance relationship between anagram and WordList because it fails to "is-a" relationship since 
+   We decided to get rid of the inheritance relationship between anagram and WordList because it fails to "is-a" relationship since 
   an anagram is not a WordList or vice versa. The reasoning for why the original author decided to subclass anagram to WordList seems
   to be so that anagram would be able to have access to the ReadDic method and some of the variables in WordList but we decided 
   instead to use composition. By doing so, anagram still has access to WordList methods and variables while not using inheritance 
@@ -34,8 +77,8 @@ This text file documents the changes that we've made
   helped make more sense of the process of the getRootIndex method and also kept getRootIndex from doing too much work. 
 
 -Moved down declaration of variables such as i and j into the for loops
- A lot of the variables such as i and j were only used in for loops yet the original author declared them outside of the for loops
- they were used in so we got rid of the declarations and declared them in the for loop that they were controlling. 
+  A lot of the variables such as i and j were only used in for loops yet the original author declared them outside of the for loops
+  they were used in so we got rid of the declarations and declared them in the for loop that they were controlling. 
 
 -Got rid of enoughCommonLetters and the algorithm for determining whether enoughCommonLetters is true or false and 
 replaced enoughCommonLetters with fewerOfEachLetter method
@@ -57,10 +100,28 @@ replaced enoughCommonLetters with fewerOfEachLetter method
   an instance variable for the class so that all of the methods can refer to it instead of needing to pass it as a parameter each
   time a method needs to access it. 
 
-
--Changed doAnagrams to getResults
-  -This is because it looks more elegant. 
+Word Class
+- got rid of the first for loop in constructor 
+    We got rid of the first for loop in the constructor of Word because we felt that it was not needed since an array of ints
+    already initializes to 0 so we got rid of it to avoid unneccessary code. 
+    
+-Method/Variable name changes
+   (Anagram)
+  -Changed doAnagrams to getResults
   -Changed Candidate to candidates
+  -Changed anagram to base
+  (WordList and Anagram)
+  -o; e => System.out; System.err
+  (WordList)
+  -r` to letterValue (more explanatory)
+  -buffer` => currentWord
+    We changed these names because we thought thaty they would look more elegant and made it more clear as to what they were
+    doing and what information that they were using.    
+ 
+
+
+
+
   
   
 
