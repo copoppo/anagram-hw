@@ -58,4 +58,14 @@ replaced enoughCommonLetters with fewerOfEachLetter method
   time a method needs to access it. 
 
 
+-Changed doAnagrams to getResults
+  -This is because it looks more elegant. 
+  -Changed Candidate to candidates
+  
+  
+
+
+
+
+
 
