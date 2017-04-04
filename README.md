@@ -20,6 +20,8 @@ Questions
 
 3. What to do with the naming of getEndIndex and rootIndexEnd
 
-test main method
-wellformed and assert
-moving methods around classes
+ test main method
+
+ wellformed and assert
+
+ moving methods around classes
