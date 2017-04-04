@@ -181,6 +181,43 @@ public class anagram{
 	}
 	
 	/**
+	 * Method to check for class invariants
+	 * @return true if the class invariants are upheld and false if not
+	 */
+	static boolean wellFormed()
+	{
+		if(myAnagram.aword == null)
+		{
+			return false;
+		}
+		//the dictionary has to have values 
+		if(wordDictionary.Dictionary == null)
+		{
+			return false;
+		}
+		
+		//can't have less than 0 candidates
+		if(totCandidates < 0)
+		{
+			return false;
+		}
+		//all of the candidate words can't have different letters than the anagram word
+		for(int i = 0; i < totCandidates-1; i++)
+		{
+			for(int j = 0; j < 26; j++)
+			{
+				if(Candidate[i].count[j] > myAnagram.count[j])
+				{
+					return false;
+				}
+			}
+		} 
+		
+		return true;
+		
+	}
+	
+	/**
 	 * A separate wellFormed method to check if the anagram word matches with myAnagram
 	 * @return false if the anagram created does not match with myAnagram
 	 */
