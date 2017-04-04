@@ -12,13 +12,16 @@
 
 
 Questions
-1. How to change the if statements
-   - getLeastCommonIndex 
-2. How to change quicksort, MultiFieldCompare, getEndIndex and rootIndexEnd
+1. How to change the if statements (DONE)
+   - getLeastCommonIndex (DONE)
+2. How to change quicksort, (DONE)
+ MultiFieldCompare, (DONE)
+ getEndIndex and rootIndexEnd (DONE)
    - naming
-3. Main method test output, do we need to assert equal or sort?
+   
+3. Main method test output, do we need to assert equal or sort? (DONE)
 
-4. Wellformed and assert
+4. Wellformed and assert (DONE)
 
-5. Moving methods around classes
+5. Moving methods around classes (DONE0
    - anagram is too long
